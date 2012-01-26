@@ -7,7 +7,8 @@ ec2ssh is a shell script that makes connecting to ec2 servers __ridiculously eas
 
 ec2ssh displays your instances in a simple digest-like menu and prompts you to enter the server number. Once you enter it, the script opens an ssh connection to the server.
 
-```$ ec2ssh
+``` shell
+$ ec2ssh
  No.	  Instance	Sec. group	Domain name                             	Name
    1	i-af23fa32	sg-223af233	ec2-107-20-76-111.compute-1.amazonaws.com	LIVE Web A
    2	i-232abc23	sg-223af233	ec2-107-22-12-222.compute-1.amazonaws.com	LIVE Web B
