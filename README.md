@@ -20,9 +20,10 @@ Ssh-ing to ec2-107-20-76-111.compute-1.amazonaws.com
 ```
 
 You can ssh to a single server or a range of servers. Examples of user input:
-`3` - Ssh to third server in the menu
-`1 4` - Ssh to first and forth server
-`1..4` - Ssh to all servers in the range from 1 to 4, i.e. 1, 2, 3 and 4.
+
++ `3` - Ssh to third server in the menu
++ `1 4` - Ssh to first and forth server
++ `1..4` - Ssh to all servers in the range from 1 to 4, i.e. 1, 2, 3 and 4.
 
 Copyright
 ---------
