@@ -1,14 +1,14 @@
 #!/bin/bash
 
+# A ridiculously easy way to SSH into EC2 servers by using a command line menu.
+
 # List all servers and parse the ec2din output to a digest
 ec2din | awk '
 	BEGIN {
 		FS="\t";
-		printf "%4s\t%10s\t%10s\t%-40s\t%s\n", "No.", "Instance", "Sec. group", "Domain name", "Tag";
 	}
 	
 	/INSTANCE/ {
-		counter++;
 		inst=$2;
 		domain=$4;
 		sg=$29;
@@ -22,30 +22,42 @@ ec2din | awk '
 			b="NULL";
 		}
 		
-		printf "%4s\t%10s\t%10s\t%-40s\t%s\n", counter, inst,sg,domain,tag;
+		printf "%10s  %10s  %-45s  %s\n", inst,sg,domain,tag;
 	}
 ' > /tmp/server_list
 
 # Check if parameter present. If so, match the lines.
-if [[ $# -eq 1 ]]
-then
-	cat /tmp/server_list | grep -i $1
+if [[ $# -eq 1 ]]; then
+	grep -i $1 /tmp/server_list > /tmp/filtered_servers
 else
-	cat /tmp/server_list
+	cat /tmp/server_list > /tmp/filtered_servers
 fi
+
+# Check if any servers matched. If so print the header. Otherwise, exit with message.
+if [ -s /tmp/filtered_servers ]
+then 
+	echo " No.  Instance    Sec. group   Domain name                                    Tag"
+else
+	echo "No matching instances."
+	exit
+fi
+
+awk '{if (FNR%2==1) printf("\033[1m%4s  %s\033[0m\n", FNR, $0); else printf("%4s  %s\n", FNR, $0);}' /tmp/filtered_servers
 
 read -p 'Enter server number, server range (e.g. 3..5) or list of servers (e.g. 2 3 4 8 9): ' servers
 
-if [[ $servers =~ ([0-9]+)..([0-9]+) ]]
-then
+if [[ $servers =~ q ]]; then
+	exit
+elif [[ $servers =~ ([0-9]+)..([0-9]+) ]]; then
 	start=${BASH_REMATCH[1]}
 	end=${BASH_REMATCH[2]}
 	servers=$(seq $start $end)
 fi
 
+# Loop through a list of servers and ssh to them one by one
 for server in $servers
 do
-	domain=$(awk "NR==$server+1" /tmp/server_list | awk "{print \$4}")
+	domain=$(awk "NR==$server" /tmp/filtered_servers | awk "{print \$3}")
 
 	echo "Ssh-ing to $domain"
 
