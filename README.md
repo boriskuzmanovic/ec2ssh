@@ -26,13 +26,14 @@ Ssh-ing to ec2-107-20-76-111.compute-1.amazonaws.com
 
 If you include a parameter the list would be narrowed down to servers whose instance, security group, domain name or tag matches the parameter. This is extremely useful if you run lots of instances. Example parameters:
 
-+ `ec2ssh live` - lists all servers whose tag contains 'live'
++ `ec2ssh live` - lists all servers whose tag contains 'LIVE'
 + `ec2ssh mysql` - lists all servers whose tag contains 'MySQL'
 + `ec2ssh sg-223af233` - lists all servers in the specified security group
 + `ec2ssh i-98ca2532` - lists a specific server matched by its instance id.
 
+Note: Matches are case insensitive.
 
-You can ssh to a single server or a range of servers. Examples of user input:
+When prompted for the server(s) you can enter one or more numbers in the following format:
 
 + `3` - Ssh to third server in the menu
 + `1 4` - Ssh to first and forth server
