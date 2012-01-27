@@ -25,7 +25,22 @@ You can ssh to a single server or a range of servers. Examples of user input:
 + `1 4` - Ssh to first and forth server
 + `1..4` - Ssh to all servers in the range from 1 to 4, i.e. 1, 2, 3 and 4.
 
+When you specify multiple servers, it connects you to the first one. When you exit, it ssh's you to the next, etc.
+
+Dependancies
+------------
+
+ec2ssh is a bash script that requires [Amazon EC2 API tools](http://aws.amazon.com/developertools/351) and awk (comes with most Mac, Unix and Linux systems by default).
+
+Practical uses
+--------------
+
++ Manual deployments
++ Server (instance) maintenance
++ One-off tasks that take less time than writing deployment scripts
++ You ♥ ssh.
+
 Copyright
 ---------
 
-Copyright © 2012 Boris Kuzmanovic. See LICENSE.txt for further details.
+Copyright © 2012 [Viafoura.com](http://viafoura.com/). See LICENSE.txt for further details.
