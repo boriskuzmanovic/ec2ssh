@@ -7,9 +7,14 @@ ec2ssh is a shell script that makes connecting to ec2 servers __ridiculously eas
 
 ec2ssh displays your instances in a simple digest-like menu and prompts you to enter the server number. Once you enter it, the script opens an ssh connection to the server.
 
+Usage
+-----
+
+Parameters are optional, but very handy if you run many sites. The parameter acts as a filter to narrow down the list of servers.
+
 ``` shell
 $ ec2ssh
- No.	  Instance	Sec. group	Domain name                             	Name
+ No.	  Instance	Sec. group	Domain name                             	Tag
    1	i-af23fa32	sg-223af233	ec2-107-20-76-111.compute-1.amazonaws.com	LIVE Web A
    2	i-232abc23	sg-223af233	ec2-107-22-12-222.compute-1.amazonaws.com	LIVE Web B
    3	i-892a98b3	sg-ccca2223	ec2-107-22-12-223.compute-1.amazonaws.com	DEV MySQL A
@@ -18,6 +23,14 @@ $ ec2ssh
 Enter server number, server range (e.g. 3..5) or list of servers (e.g. 2 3 4 8 9): 1
 Ssh-ing to ec2-107-20-76-111.compute-1.amazonaws.com
 ```
+
+If you include a parameter the list would be narrowed down to servers whose instance, security group, domain name or tag matches the parameter. This is extremely useful if you run lots of instances. Example parameters:
+
++ `ec2ssh live` - lists all servers whose tag contains 'live'
++ `ec2ssh mysql` - lists all servers whose tag contains 'MySQL'
++ `ec2ssh sg-223af233` - lists all servers in the specified security group
++ `ec2ssh i-98ca2532` - lists a specific server matched by its instance id.
+
 
 You can ssh to a single server or a range of servers. Examples of user input:
 

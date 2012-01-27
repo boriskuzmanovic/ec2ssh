@@ -1,9 +1,10 @@
 #!/bin/bash
 
+# List all servers and parse the ec2din output to a digest
 ec2din | awk '
 	BEGIN {
 		FS="\t";
-		printf "%4s\t%10s\t%10s\t%-40s\t%s\n", "No.", "Instance", "Sec. group", "Domain name", "Name";
+		printf "%4s\t%10s\t%10s\t%-40s\t%s\n", "No.", "Instance", "Sec. group", "Domain name", "Tag";
 	}
 	
 	/INSTANCE/ {
@@ -15,17 +16,23 @@ ec2din | awk '
 	
 	/TAG/ {
 		if ( $4 == "Name") {
-			name=$5;
+			tag=$5;
 			getline;
 		} else {
 			b="NULL";
 		}
 		
-		printf "%4s\t%10s\t%10s\t%-40s\t%s\n", counter, inst,sg,domain,name;
+		printf "%4s\t%10s\t%10s\t%-40s\t%s\n", counter, inst,sg,domain,tag;
 	}
 ' > /tmp/server_list
 
-cat /tmp/server_list
+# Check if parameter present. If so, match the lines.
+if [[ $# -eq 1 ]]
+then
+	cat /tmp/server_list | grep -i $1
+else
+	cat /tmp/server_list
+fi
 
 read -p 'Enter server number, server range (e.g. 3..5) or list of servers (e.g. 2 3 4 8 9): ' servers
 
