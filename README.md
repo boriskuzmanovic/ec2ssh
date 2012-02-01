@@ -54,6 +54,11 @@ Practical uses
 + One-off tasks that take less time than writing deployment scripts
 + You ♥ ssh.
 
+Comments, questions?
+--------------------
+
+For all comments and suggestions please visit [ec2ssh blog](http://wp.me/p1RcjU-2l).
+
 Copyright
 ---------
 
